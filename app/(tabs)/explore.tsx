@@ -1,112 +1,148 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
+import { useRouter } from "expo-router";
+import React from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-import { Collapsible } from '@/components/ui/collapsible';
-import { ExternalLink } from '@/components/external-link';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Fonts } from '@/constants/theme';
+const LETTER_COLORS = ["#E57FCA", "#FF7B6B", "#5DBBF5", "#9B8FFF", "#6DD4A8"];
 
-export default function TabTwoScreen() {
+export default function HomeScreen() {
+  const router = useRouter();
+
+  const startGame = () => {
+    router.push("/(tabs)/game");
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={
-        <IconSymbol
-          size={310}
-          color="#808080"
-          name="chevron.left.forwardslash.chevron.right"
-          style={styles.headerImage}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}>
-          Explore
-        </ThemedText>
-      </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{' '}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
-          <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the <ThemedText type="defaultSemiBold">@2x</ThemedText> and{' '}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to provide files for
-          different screen densities
-        </ThemedText>
-        <Image
-          source={require('@/assets/images/react-logo.png')}
-          style={{ width: 100, height: 100, alignSelf: 'center' }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{' '}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook lets you inspect
-          what the user&apos;s current color scheme is, and so you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{' '}
-          <ThemedText type="defaultSemiBold">components/HelloWave.tsx</ThemedText> component uses
-          the powerful{' '}
-          <ThemedText type="defaultSemiBold" style={{ fontFamily: Fonts.mono }}>
-            react-native-reanimated
-          </ThemedText>{' '}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+    <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <View style={styles.lettersRow}>
+          {["G", "U", "E", "S", "5"].map((letter, index) => (
+            <View
+              key={index}
+              style={[
+                styles.letterCircle,
+                { backgroundColor: LETTER_COLORS[index] },
+              ]}
+            >
+              <Text style={styles.letterText}>{letter}</Text>
+            </View>
+          ))}
+        </View>
+        <View style={styles.bestContainer}>
+          <Text style={styles.bestText}>BEST</Text>
+          <View style={styles.bestCircle}>
+            <Text style={styles.bestNumber}>0</Text>
+          </View>
+        </View>
+      </View>
+
+      <View style={styles.buttonsContainer}>
+        <Pressable
+          style={[styles.playButton, styles.button]}
+          onPress={startGame}
+        >
+          <Text style={styles.playIcon}>▶</Text>
+        </Pressable>
+
+        <View style={styles.bottomButtons}>
+          <Pressable style={[styles.smallButton, styles.galleryButton]}>
+            <Text style={styles.buttonIcon}>🖼</Text>
+          </Pressable>
+
+          <Pressable style={[styles.smallButton, styles.statsButton]}>
+            <Text style={styles.buttonIcon}>📊</Text>
+          </Pressable>
+        </View>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+  container: {
+    flex: 1,
+    backgroundColor: "#FFD166",
+    alignItems: "center",
+    justifyContent: "center",
   },
-  titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
+  logoContainer: {
+    alignItems: "center",
+    marginBottom: 80,
+  },
+  lettersRow: {
+    flexDirection: "row",
+    gap: 12,
+    marginBottom: 30,
+  },
+  letterCircle: {
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  letterText: {
+    color: "white",
+    fontSize: 32,
+    fontWeight: "bold",
+  },
+  bestContainer: {
+    alignItems: "center",
+  },
+  bestText: {
+    color: "white",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  bestCircle: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: "white",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  bestNumber: {
+    color: "#FFD166",
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  buttonsContainer: {
+    alignItems: "center",
+  },
+  button: {
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  playButton: {
+    width: 140,
+    height: 50,
+    backgroundColor: "#6B69FF",
+    marginBottom: 15,
+  },
+  playIcon: {
+    color: "white",
+    fontSize: 28,
+  },
+  bottomButtons: {
+    flexDirection: "row",
+    gap: 15,
+  },
+  smallButton: {
+    width: 60,
+    height: 50,
+    borderRadius: 12,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  galleryButton: {
+    backgroundColor: "#5DD4C8",
+  },
+  statsButton: {
+    backgroundColor: "#9B8FFF",
+  },
+  buttonIcon: {
+    fontSize: 24,
   },
 });
