@@ -1,6 +1,6 @@
 {
   "name": "gues5",
-  "main": "App.tsx",
+  "main": "index.js",
   "version": "1.0.0",
   "scripts": {
     "start": "expo start",

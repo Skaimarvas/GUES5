@@ -1,7 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import React from 'react';
-import { AppRegistry } from 'react-native';
 import GameScreen from './screens/GameScreen';
 import HomeScreen from './screens/HomeScreen';
 import ResultsScreen from './screens/ResultsScreen';
@@ -36,5 +35,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-AppRegistry.registerComponent('main', () => App);
